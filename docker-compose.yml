@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: nest-app
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mysql
+    env_file:
+        - .env  # .env 파일에서 환경변수 로드
+    networks:
+      - mynetwork
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    restart: always
+    env_file:
+      - .env  # MySQL 서비스도 .env 사용
+    ports:
+      - "3306:3306"
+    command: --default-authentication-plugin=mysql_native_password  # 부팅 시 인증 방식을 구버전 호환 모드로 설정,NestJS, TypeORM, Node.js 앱을 MySQL 8과 연동할 때 거의 필수로 넣는 설정
+
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge
