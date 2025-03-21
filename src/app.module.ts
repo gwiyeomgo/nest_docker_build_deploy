@@ -15,7 +15,8 @@ import { ConfigModule } from '@nestjs/config';
       username: process.env.DATABASE_USER ,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME ,
-
+      synchronize: true ,// 자동 테이블 생성
+      autoLoadEntities: true, //자동 entity 등록
     }),
     TodoModule
   ]
